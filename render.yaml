@@ -1,0 +1,60 @@
+services:
+  # Backend API Service
+  - type: web
+    name: event-booking-backend
+    env: docker
+    dockerfilePath: Dockerfile.backend
+    dockerContext: .
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: JWT_EXPIRE
+        value: 30d
+      - key: CLIENT_URL
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: EMAIL_HOST
+        value: smtp.gmail.com
+      - key: EMAIL_PORT
+        value: 587
+      - key: EMAIL_USER
+        sync: false
+      - key: EMAIL_PASSWORD
+        sync: false
+
+  # Frontend Service
+  - type: web
+    name: event-booking-frontend
+    env: docker
+    dockerfilePath: Dockerfile.frontend
+    dockerContext: .
+    buildCommand: npm run build
+    startCommand: nginx -g "daemon off;"
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_URL
+        sync: false
+      - key: VITE_SOCKET_URL
+        sync: false
+      - key: VITE_STRIPE_PUBLIC_KEY
+        sync: false
+
+  # MongoDB Database (Using external MongoDB service in production)
+  # Note: Render doesn't support MongoDB as a service in render.yaml
+  # You'll need to use an external MongoDB provider like MongoDB Atlas
