@@ -37,6 +37,7 @@ const io = new Server(httpServer, {
     origin: [
       process.env.CLIENT_URL || "http://localhost:5173",
       "http://localhost:5173",
+      "http://localhost:5174",
       "https://event-ticket-booking-frontend.onrender.com",
     ],
     methods: ["GET", "POST"],
@@ -59,6 +60,7 @@ app.use(
       const allowedOrigins = [
         process.env.CLIENT_URL || "http://localhost:5173",
         "http://localhost:5173",
+        "http://localhost:5174",
         "https://event-ticket-booking-frontend.onrender.com",
       ];
       // Allow requests with no origin (like mobile apps or curl)
