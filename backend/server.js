@@ -79,9 +79,6 @@ app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Apply rate limiting
-app.use("/api/", rateLimiter);
-
 // Routes
 app.get("/", (req, res) => {
   res.json({
@@ -91,11 +88,12 @@ app.get("/", (req, res) => {
   });
 });
 
-app.use("/api/auth", authRoutes);
-app.use("/api/events", eventRoutes);
-app.use("/api/bookings", bookingRoutes);
-app.use("/api/admin", adminRoutes);
-app.use("/api/payment", paymentRoutes);
+// Apply routes with rate limiting
+app.use("/api/auth", rateLimiter, authRoutes);
+app.use("/api/events", rateLimiter, eventRoutes);
+app.use("/api/bookings", rateLimiter, bookingRoutes);
+app.use("/api/admin", rateLimiter, adminRoutes);
+app.use("/api/payment", rateLimiter, paymentRoutes);
 
 // Error Handlers
 app.use(notFound);
