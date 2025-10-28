@@ -1,15 +1,15 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const bookingSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
       required: true,
     },
     event: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Event',
+      ref: "Event",
       required: true,
     },
     seats: [
@@ -47,17 +47,17 @@ const bookingSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ['pending', 'confirmed', 'cancelled', 'refunded', 'expired'],
-      default: 'pending',
+      enum: ["pending", "confirmed", "cancelled", "refunded", "expired"],
+      default: "pending",
     },
     paymentStatus: {
       type: String,
-      enum: ['pending', 'paid', 'failed', 'refunded'],
-      default: 'pending',
+      enum: ["pending", "paid", "failed", "refunded"],
+      default: "pending",
     },
     paymentMethod: {
       type: String,
-      enum: ['card', 'wallet', 'upi', 'netbanking'],
+      enum: ["card", "wallet", "upi", "netbanking"],
     },
     paymentDetails: {
       transactionId: String,
@@ -96,7 +96,7 @@ const bookingSchema = new mongoose.Schema(
 );
 
 // Generate booking reference before saving
-bookingSchema.pre('save', async function (next) {
+bookingSchema.pre("save", async function (next) {
   if (!this.bookingReference) {
     const timestamp = Date.now().toString(36).toUpperCase();
     const random = Math.random().toString(36).substring(2, 8).toUpperCase();
@@ -107,10 +107,9 @@ bookingSchema.pre('save', async function (next) {
 
 // Index for faster queries
 bookingSchema.index({ user: 1, event: 1 });
-bookingSchema.index({ bookingReference: 1 });
 bookingSchema.index({ status: 1 });
 bookingSchema.index({ createdAt: -1 });
 
-const Booking = mongoose.model('Booking', bookingSchema);
+const Booking = mongoose.model("Booking", bookingSchema);
 
 export default Booking;

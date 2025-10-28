@@ -4,12 +4,19 @@
   "description": "Advanced Event Ticket Booking and Seat Selection Application",
   "main": "index.js",
   "scripts": {
+    "start": "cd backend && npm start",
     "server": "cd backend && npm run dev",
     "client": "cd frontend && npm run dev",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install"
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "build": "cd frontend && npm run build"
   },
-  "keywords": ["mern", "booking", "events", "tickets"],
+  "keywords": [
+    "mern",
+    "booking",
+    "events",
+    "tickets"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
